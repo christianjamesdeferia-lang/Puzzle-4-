@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUZZLE 4</title>
+
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #090909;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Georgia, serif;
+}
+
+.container {
+    width: 90%;
+    max-width: 650px;
+    text-align: center;
+}
+
+h1 {
+    letter-spacing: 6px;
+    font-size: 22px;
+    font-weight: normal;
+}
+
+.black-box {
+    margin-top: 35px;
+    padding: 30px;
+    background: #000;
+    border: 1px solid #222;
+}
+
+.label {
+    color: #777;
+    margin-bottom: 18px;
+    font-family: monospace;
+}
+
+.message {
+    color: #ddd;
+    font-family: monospace;
+    font-size: 16px;
+    line-height: 1.7;
+    word-break: break-word;
+}
+
+.arrow {
+    margin: 24px 0;
+    color: #555;
+    font-size: 24px;
+}
+
+input {
+    width: 90%;
+    padding: 14px;
+    box-sizing: border-box;
+    background: #111;
+    border: 1px solid #333;
+    color: white;
+    text-align: center;
+    font-family: monospace;
+}
+
+button {
+    margin-top: 15px;
+    padding: 11px 28px;
+    background: #111;
+    border: 1px solid #444;
+    color: #aaa;
+    cursor: pointer;
+}
+
+button:hover {
+    color: white;
+}
+
+#result {
+    margin-top: 20px;
+    font-family: monospace;
+    color: white;
+    min-height: 22px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>PUZZLE 4</h1>
+
+    <div class="black-box">
+
+        <div class="label">
+            CAESAR MESSAGE
+        </div>
+
+        <div class="message">
+            [ Zkdw lv Kdvwxu? ]
+        </div>
+
+        <div class="arrow">
+            ↓
+        </div>
+
+        <div class="label">
+            ??? MESSAGE
+        </div>
+
+        <div class="message">
+            [ Bmgabv gu gprxo mikbggnsvt lszfz ricvovrj. Zcmfvm Qgbs Pozprx ]
+        </div>
+
+        <div style="margin-top: 28px;" class="label">
+            Key: __________
+        </div>
+
+        <input id="answer" placeholder="Enter key">
+
+        <br>
+
+        <button onclick="checkKey()">ENTER</button>
+
+        <div id="result"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+function vigenereDecode(text, key) {
+
+    let result = "";
+    let keyIndex = 0;
+
+    key = key.toUpperCase();
+
+    for (const char of text) {
+
+        if (/[A-Za-z]/.test(char)) {
+
+            const base = char >= "a" ? 97 : 65;
+
+            const shift =
+                key.charCodeAt(keyIndex % key.length) - 65;
+
+            result += String.fromCharCode(
+                (char.charCodeAt(0) - base - shift + 26) % 26 + base
+            );
+
+            keyIndex++;
+
+        } else {
+
+            result += char;
+
+        }
+    }
+
+    return result;
+}
+
+
+function checkKey() {
+
+    const input =
+        document.getElementById("answer")
+        .value
+        .trim()
+        .toUpperCase();
+
+    const result =
+        document.getElementById("result");
+
+
+    if (input === "KING") {
+
+        result.textContent =
+            vigenereDecode(
+                "Bmgabv gu gprxo mikbggnsvt lszfz ricvovrj. Zcmfvm Qgbs Pozprx",
+                "KING"
+            );
+
+    } else {
+
+        result.textContent = "";
+
+    }
+}
+
+</script>
+
+</body>
+</html>
